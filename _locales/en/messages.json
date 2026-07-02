@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Pro Prompt Optimizer"
+  },
+  "extDescription": {
+    "message": "Translate and optimize Persian and Arabic prompts to structured, high-quality English for ChatGPT, Claude, Gemini, and Grok."
+  }
+}

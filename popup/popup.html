@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Prompt Optimizer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="ppo-popup-container">
+    <!-- Header -->
+    <header class="ppo-header">
+      <div class="ppo-logo-area">
+        <img src="../icons/icon48.png" alt="Logo" class="ppo-logo-img">
+        <div class="ppo-logo-titles">
+          <h1 data-i18n="ext_title">Pro Prompt Optimizer</h1>
+          <span class="ppo-en-subtitle" data-i18n="ext_subtitle">Optimize Persian & Arabic prompts dynamically</span>
+        </div>
+      </div>
+      <div class="ppo-status-glow" title="Extension is Active / افزونه فعال است"></div>
+    </header>
+
+    <!-- Tab Buttons -->
+    <nav class="ppo-tabs">
+      <button class="ppo-tab-btn active" data-tab="settings">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span data-i18n="settings_tab">Settings</span>
+      </button>
+      <button class="ppo-tab-btn" data-tab="library">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span data-i18n="library_tab">Prompt Library</span>
+      </button>
+      <button class="ppo-tab-btn" data-tab="history">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span data-i18n="history_tab">History</span>
+      </button>
+    </nav>
+
+    <!-- Content Sections -->
+    <main class="ppo-main-content">
+      
+      <!-- Settings Panel -->
+      <section id="tab-settings" class="ppo-tab-panel active">
+        <!-- Provider selection -->
+        <div class="ppo-card">
+          <div class="ppo-form-group">
+            <label for="api-provider" data-i18n="api_provider_label">AI Provider</label>
+            <select id="api-provider" class="ppo-select-field">
+              <option value="groq" data-i18n="api_provider_groq">Groq Cloud (Very Fast & Free)</option>
+              <option value="openai" data-i18n="api_provider_openai">OpenAI (Highly Intelligent)</option>
+              <option value="gemini" data-i18n="api_provider_gemini">Google Gemini (Highly Intelligent)</option>
+              <option value="free" data-i18n="api_provider_free">Free Online Translator (No API Key Required)</option>
+            </select>
+          </div>
+
+          <!-- OpenAI settings -->
+          <div id="openai-credentials" class="ppo-credentials-fields" style="display: none;">
+            <div class="ppo-form-group">
+              <label for="openai-api-key" data-i18n="openai_key_label">OpenAI API Key</label>
+              <input type="password" id="openai-api-key" placeholder="sk-proj-..." class="ppo-input-field">
+            </div>
+            <div class="ppo-form-group">
+              <label for="openai-model" data-i18n="openai_model_label">Default Model</label>
+              <select id="openai-model" class="ppo-select-field">
+                <option value="gpt-4o-mini">gpt-4o-mini (Fast & Cheap)</option>
+                <option value="gpt-4o">gpt-4o (Most Accurate)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Groq settings -->
+          <div id="groq-credentials" class="ppo-credentials-fields" style="display: none;">
+            <div class="ppo-form-group">
+              <label for="groq-api-key" data-i18n="groq_key_label">Groq API Key</label>
+              <input type="password" id="groq-api-key" placeholder="gsk_..." class="ppo-input-field">
+              <div class="ppo-input-help" data-i18n="groq_key_help">You can get a free key from the <a href="https://console.groq.com/keys" target="_blank">Groq Console</a>.</div>
+            </div>
+            <div class="ppo-form-group">
+              <label for="groq-model" data-i18n="groq_model_label">Default Model</label>
+              <select id="groq-model" class="ppo-select-field">
+                <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (Recommended)</option>
+                <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (Super Fast)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Gemini settings -->
+          <div id="gemini-credentials" class="ppo-credentials-fields" style="display: none;">
+            <div class="ppo-form-group">
+              <label for="gemini-api-key" data-i18n="gemini_key_label">Google Gemini API Key</label>
+              <input type="password" id="gemini-api-key" placeholder="AIzaSy..." class="ppo-input-field">
+              <div class="ppo-input-help" data-i18n="gemini_key_help">You can get a free API key from the <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a>.</div>
+            </div>
+            <div class="ppo-form-group">
+              <label for="gemini-model" data-i18n="gemini_model_label">Default Model</label>
+              <select id="gemini-model" class="ppo-select-field">
+                <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended)</option>
+                <option value="gemini-2.5-pro">gemini-2.5-pro (Highly Intelligent)</option>
+                <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Free translation disclaimer -->
+          <div id="free-disclaimer" class="ppo-info-box" style="display: none;">
+            <p data-i18n="free_disclaimer_text"><strong>Note:</strong> The free translation service only translates your Persian/Arabic text and applies static prompt structuring. For advanced AI-driven optimization, please use an API key.</p>
+          </div>
+        </div>
+
+        <!-- Extension Preferences -->
+        <div class="ppo-card">
+          <h3 data-i18n="prefs_title">Extension Preferences</h3>
+          
+          <div class="ppo-switch-group">
+            <div class="ppo-switch-label">
+              <strong data-i18n="autodetect_title">Auto-detect Persian/Arabic</strong>
+              <span data-i18n="autodetect_desc">Show optimizer button when typing in Persian or Arabic in chat inputs</span>
+            </div>
+            <label class="ppo-switch">
+              <input type="checkbox" id="toggle-autodetect" checked>
+              <span class="ppo-slider"></span>
+            </label>
+          </div>
+
+          <div class="ppo-switch-group">
+            <div class="ppo-switch-label">
+              <strong data-i18n="floating_title">Show Floating Button</strong>
+              <span data-i18n="floating_desc">Show a floating button in the bottom corner of AI text inputs</span>
+            </div>
+            <label class="ppo-switch">
+              <input type="checkbox" id="toggle-floating" checked>
+              <span class="ppo-slider"></span>
+            </label>
+          </div>
+
+          <div class="ppo-form-group" style="margin-top: 15px;">
+            <label for="default-template" data-i18n="default_template_label">Default Optimization Template</label>
+            <select id="default-template" class="ppo-select-field">
+              <option value="general" data-i18n="template_general">Standard / General</option>
+              <option value="coding" data-i18n="template_coding">Coding</option>
+              <option value="writing" data-i18n="template_writing">Content Writing</option>
+              <option value="analysis" data-i18n="template_analysis">Data Analysis</option>
+            </select>
+          </div>
+
+          <div class="ppo-form-group" style="margin-top: 15px;">
+            <label for="ui-language" data-i18n="ui_language_label">Extension Language / زبان افزونه</label>
+            <select id="ui-language" class="ppo-select-field">
+              <option value="en">English (Default)</option>
+              <option value="fa">فارسی (Persian)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ppo-save-banner" id="save-status" data-i18n="save_success">
+          Settings saved successfully
+        </div>
+      </section>
+
+      <!-- Library Panel -->
+      <section id="tab-library" class="ppo-tab-panel">
+        <div class="ppo-card">
+          <h3 data-i18n="lib_title_add">Add New Prompt to Library</h3>
+          <div class="ppo-form-group">
+            <input type="text" id="lib-title" placeholder="Prompt Title (e.g., Java Code Formatter)" class="ppo-input-field" data-i18n="lib_title_placeholder">
+          </div>
+          <div class="ppo-form-group">
+            <textarea id="lib-content" placeholder="Write your prompt text here..." class="ppo-textarea-field" data-i18n="lib_content_placeholder"></textarea>
+          </div>
+          <button class="ppo-btn ppo-btn-primary ppo-btn-full" id="add-prompt-btn" data-i18n="lib_save_btn">Save to Library</button>
+        </div>
+
+        <div class="ppo-library-list" id="library-list-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- History Panel -->
+      <section id="tab-history" class="ppo-tab-panel">
+        <div class="ppo-history-header">
+          <h3 data-i18n="hist_title">Recent Optimization History</h3>
+          <button class="ppo-clear-history-btn" id="clear-history-btn" data-i18n="hist_clear_btn">Clear All</button>
+        </div>
+        <div class="ppo-history-list" id="history-list-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ppo-footer">
+      <div data-i18n="footer_help">Help: Press <strong>Ctrl + Shift + O</strong> to quickly optimize the prompt in your current input.</div>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
