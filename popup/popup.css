@@ -9,7 +9,7 @@
 
 :root {
   --font-fa: 'Estedad', system-ui, -apple-system, sans-serif;
-  --font-en: system-ui, -apple-system, sans-serif;
+  --font-en: 'Estedad', system-ui, -apple-system, sans-serif;
   
   --bg-dark: #070d0d;               /* Deep slate-black with teal tint */
   --bg-card: rgba(255, 255, 255, 0.015);

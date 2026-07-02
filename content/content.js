@@ -361,12 +361,22 @@
     floatBtn.classList.add("ppo-visible");
   }
 
+  function adjustInputDirectionAndFont(el, text) {
+    if (!text || !text.trim()) return;
+    const lang = detectLanguage(text);
+    const isRTL = (lang === "fa" || lang === "ar");
+    el.style.direction = isRTL ? "rtl" : "ltr";
+    el.style.textAlign = isRTL ? "right" : "left";
+    el.style.fontFamily = "'Estedad', system-ui, -apple-system, sans-serif";
+  }
+
   // Handle global page event listeners for input targeting
   document.addEventListener("focusin", (e) => {
     const el = e.target;
     if (el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && el.type === "text") || el.getAttribute("contenteditable") === "true") {
       activeElement = el;
       const text = activeElement.value || activeElement.innerText || "";
+      adjustInputDirectionAndFont(activeElement, text);
       if (settings.autoDetect && text.trim().length > 0) {
         positionFloatingButton(activeElement);
       } else {
@@ -378,6 +388,7 @@
   document.addEventListener("input", (e) => {
     if (e.target === activeElement) {
       const text = activeElement.value || activeElement.innerText || "";
+      adjustInputDirectionAndFont(activeElement, text);
       if (settings.autoDetect && text.trim().length > 0) {
         positionFloatingButton(activeElement);
       } else {

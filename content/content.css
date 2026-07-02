@@ -369,7 +369,7 @@
 .ppo-textarea.en {
   direction: ltr;
   text-align: left;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Estedad', system-ui, -apple-system, sans-serif;
   border-color: rgba(59, 130, 246, 0.15);
   min-height: 180px;
 }
