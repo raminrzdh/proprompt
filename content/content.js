@@ -3,6 +3,69 @@
   if (window.ppoInitialized) return;
   window.ppoInitialized = true;
 
+  // Inject local Estedad font into webpage DOM for fallbacks
+  const styleEl = document.createElement("style");
+  styleEl.textContent = `
+    @font-face {
+      font-family: 'EstedadPage';
+      src: url('${chrome.runtime.getURL("icons/font/Estedad-VariableFont_wght.ttf")}') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+    @font-face {
+      font-family: 'sans-serif';
+      src: url('${chrome.runtime.getURL("icons/font/Estedad-VariableFont_wght.ttf")}') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+    @font-face {
+      font-family: 'system-ui';
+      src: url('${chrome.runtime.getURL("icons/font/Estedad-VariableFont_wght.ttf")}') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+    @font-face {
+      font-family: '-apple-system';
+      src: url('${chrome.runtime.getURL("icons/font/Estedad-VariableFont_wght.ttf")}') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+    @font-face {
+      font-family: 'BlinkMacSystemFont';
+      src: url('${chrome.runtime.getURL("icons/font/Estedad-VariableFont_wght.ttf")}') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+  `;
+  document.documentElement.appendChild(styleEl);
+
+  // Prepend EstedadPage to root computed font-family to override fallback chains on host websites (preserves Latin design fonts)
+  try {
+    const htmlFont = window.getComputedStyle(document.documentElement).fontFamily;
+    const styleOverride = document.createElement("style");
+    styleOverride.textContent = `
+      html, body, p, span, li, a, h1, h2, h3, h4, h5, h6, textarea, input, [contenteditable="true"] { 
+        font-family: 'EstedadPage', ${htmlFont} !important; 
+      }
+      pre, code, pre *, code * {
+        font-family: monospace !important;
+      }
+    `;
+    document.documentElement.appendChild(styleOverride);
+  } catch (err) {
+    console.warn("Could not dynamically append EstedadPage font-family:", err);
+  }
+
   // Global states
   let activeElement = null;
   let originalPromptText = "";
